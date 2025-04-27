@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Controllers\Estados;
+namespace App\Controllers\Usuarios;
 
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
-use App\Controllers\Estados\_BaseEstadosController;
+use App\Controllers\Usuarios\_BaseUsuariosController;
 
-class getEstadosController extends _BaseEstadosController
+class getUsuariosController extends _BaseUsuariosController
 {
     public function __invoke(Request $request, Response $response)
     {
@@ -23,7 +23,7 @@ class getEstadosController extends _BaseEstadosController
         //devuelve informacion del service
         $response->getBody()->write(
             json_encode([
-                'response' => $this->estadosService->get($params['tipo']),
+                'response' => $this->UsuariosService->get($params['tipo']),
             ])
         );
 

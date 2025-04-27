@@ -14,15 +14,15 @@ $app->group('/api', function (RouteCollectorProxy $app) {
             ->add(AuthMiddleware::class);
     });
 
-    $app->group('/estados', function (RouteCollectorProxy $app) {
+    $app->group('/usuarios', function (RouteCollectorProxy $app) {
         // habilita el metodo get y utiliza el controller de getEmpresas
-        $app->get('', App\Controllers\Estados\getEstadosController::class)
+        $app->get('', App\Controllers\Usuarios\getUsuariosController::class)
             ->setName('get');
-        $app->post('', App\Controllers\Estados\postEstadosController::class)
+        $app->post('', App\Controllers\Usuarios\postUsuariosController::class)
             ->setName('post');
-        $app->post('/editar', App\Controllers\Estados\putEstadosController::class)
+        $app->put('', App\Controllers\Usuarios\putUsuariosController::class)
             ->setName('put');
-        $app->delete('', App\Controllers\Estados\deleteEstadosController::class)
+        $app->delete('', App\Controllers\Usuarios\deleteUsuariosController::class)
             ->setName('delete');
     });
 

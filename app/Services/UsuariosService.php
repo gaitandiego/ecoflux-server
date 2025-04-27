@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\AccesoDatos;
 use \PDO;
 
-class EstadosService
+class UsuariosService
 {
     private $db;
 
@@ -19,7 +19,7 @@ class EstadosService
     {
         try {
 
-            $sql = "SELECT *  from estados";
+            $sql = "SELECT *  from Usuarios";
             //Conexion a la db
 
             $stmt = $this->db->prepararConsulta($sql);
@@ -37,14 +37,16 @@ class EstadosService
 
 
     //funcion utilizada en controllers posEmpresasController
-    public function post($nombre, $color, $tipo)
+    public function post($params)
     {
         try {
-            $sql = "INSERT INTO estados (nombre,color,tipo) VALUES (:nombre, :color, :tipo)";
+            $sql = "INSERT INTO Usuarios (email,password,nombre_usuario,empresa,rol) VALUES (:email, :password, :nombre_usuario, :empresa, :rol)";
             $stmt = $this->db->prepararConsulta($sql);
-            $stmt->bindParam(':nombre', $nombre);
-            $stmt->bindParam(':color', $color);
-            $stmt->bindParam(':tipo', $tipo);
+            $stmt->bindParam(':email', $params['email']);
+            $stmt->bindParam(':password', md5($params['password']));
+            $stmt->bindParam(':nombre_usuario', $params['nombre_usuario']);
+            $stmt->bindParam(':empresa', $params['empresa']);
+            $stmt->bindParam(':rol', $params['rol']);
             $stmt->execute();
 
             return true;
@@ -54,16 +56,27 @@ class EstadosService
     }
 
     //funcion utilizada en controllers putEmpresasController
-    public function put($id, $nombre, $color, $tipo)
+    public function put($params)
     {
         try {
-            $sql = "UPDATE estados SET nombre = :nombre,color = :color,tipo = :tipo WHERE id = :id";
+            $sql = "UPDATE Usuarios SET nombre_usuario = :nombre_usuario, password = :password, email = :email,empresa = :empresa, rol = :rol WHERE id = :id";
             $stmt = $this->db->prepararConsulta($sql);
-            $stmt->bindParam(':nombre', $nombre);
-            $stmt->bindParam(':color', $color);
-            $stmt->bindParam(':tipo', $tipo);
-            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':id', $params['id']);
+            $stmt->bindParam(':nombre_usuario', $params['nombre_usuario']);
+            $stmt->bindParam(':password', md5($params['password']));
+            $stmt->bindParam(':email', $params['email']);
+            $stmt->bindParam(':empresa', $params['empresa']);
+            $stmt->bindParam(':rol', $params['rol']);
             $stmt->execute();
+            //verifica si se actualizo
+            if ($stmt->rowCount() == 0) {
+                throw new \Exception('No se actualizo el registro', 504);
+            }
+            //verifica si se actualizo
+            if ($stmt->rowCount() == 0) {
+                throw new \Exception('No se actualizo el registro', 504);
+            }
+            //verifica si se actualizo      
 
             return true;
         } catch (
@@ -77,7 +90,7 @@ class EstadosService
     public function delete($id)
     {
         try {
-            $sql = "DELETE FROM estados WHERE id = :id";
+            $sql = "DELETE FROM Usuarios WHERE id = :id";
             $stmt = $this->db->prepararConsulta($sql);
             $stmt->bindParam(':id', $id);
             $stmt->execute();

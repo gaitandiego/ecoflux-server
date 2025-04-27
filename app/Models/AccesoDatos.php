@@ -19,11 +19,11 @@ class AccesoDatos
     public function __construct()
     {
         try {
-            $this->host = "3.131.89.97";
-            $this->user = "prospera";
-            $this->pass = "ffe13650616411e8c990242ac120002";
+            $this->host = "localhost";
+            $this->user = "ecoflux";
+            $this->pass = "ecoflux";
             $this->db_port = "3306";
-            $this->dbname = "ramos";
+            $this->dbname = "ecoflux";
 
             $conn_str = "mysql:host=$this->host;port=$this->db_port;dbname=$this->dbname";
             $this->objetoPDO = new PDO($conn_str, $this->user, $this->pass);
@@ -32,14 +32,6 @@ class AccesoDatos
         } catch (\Throwable $th) {
             throw new \Exception('Error on db', 504);
         }
-    }
-
-    public static function obtenerInstancia()
-    {
-        if (!isset(self::$objAccesoDatos)) {
-            self::$objAccesoDatos = new AccesoDatos();
-        }
-        return self::$objAccesoDatos;
     }
 
     public function prepararConsulta($sql)
