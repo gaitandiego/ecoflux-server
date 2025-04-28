@@ -15,7 +15,7 @@ $app->group('/api', function (RouteCollectorProxy $app) {
     });
 
     $app->group('/usuarios', function (RouteCollectorProxy $app) {
-        // habilita el metodo get y utiliza el controller de getEmpresas
+        // habilita el metodo get y utiliza el controller 
         $app->get('', App\Controllers\Usuarios\getUsuariosController::class)
             ->setName('get');
         $app->post('', App\Controllers\Usuarios\postUsuariosController::class)
@@ -25,6 +25,19 @@ $app->group('/api', function (RouteCollectorProxy $app) {
         $app->delete('', App\Controllers\Usuarios\deleteUsuariosController::class)
             ->setName('delete');
     });
+
+    $app->group('/recolecciones', function (RouteCollectorProxy $app) {
+        // habilita el metodo get y utiliza el controller 
+        $app->get('', App\Controllers\Recolecciones\getRecoleccionesController::class)
+            ->setName('get');
+        $app->post('', App\Controllers\Recolecciones\postRecoleccionesController::class)
+            ->setName('post');
+        $app->put('', App\Controllers\Recolecciones\putRecoleccionesController::class)
+            ->setName('put');
+        $app->delete('', App\Controllers\Recolecciones\deleteRecoleccionesController::class)
+            ->setName('delete');
+    });
+
 
     $app->get('/[{path:.*}]', function (Request $request, Response $response, $args) {
         $response->getBody()->write('Route not found');
